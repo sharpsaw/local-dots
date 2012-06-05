@@ -1,0 +1,6 @@
+# vim:ft=sh
+## Use ~/local for `make install` situations. I generally use the ,M alias.
+[ -e ~/local ] || mkdir ~/local
+export DOT_CONFIGURE_ARGS="--prefix=$HOME/local"
+export LDFLAGS="$LDFLAGS -L$HOME/local/lib" # Maybe more?
+export PATH="$HOME/bin:$HOME/usr/bin:$PATH"

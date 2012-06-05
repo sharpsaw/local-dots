@@ -1,0 +1,28 @@
+#!/bin/bash -xe
+EXTRACT_DIR=${BABYAPT_EXTRACT_DIR:-~/deb}
+DEST_DIR=${BABYAPT_DEST_DIR:-~/deb}
+url=$1
+[ ${url:0:4} == 'http' ]
+debname=${1##*/}
+simplename=${debname%%_*}
+
+[ -e $EXTRACT_DIR ] || mkdir -p $EXTRACT_DIR
+cd $EXTRACT_DIR
+
+mkdir $simplename
+cd $simplename
+wget $url
+ar x $debname
+tar xzf control.tar.gz && rm $_
+mkdir data && cd $_
+tar xzf ../data.tar.gz && rm $_
+
+find ..
+: ...Extracted to ./$simplename
+
+[ -d $DEST_DIR ] || (
+    mkdir $DEST_DIR
+)
+find . | cpio -dump $DEST_DIR
+
+: Now it is time to hash -r
