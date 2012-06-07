@@ -1,4 +1,0 @@
-# vim:ft=sh
-## For use with `babyapt`
-export PATH="$HOME/deb/bin:$HOME/deb/usr/bin:$PATH"
-export LD_LIBRARY_PATH="$HOME/deb/usr/lib:$LD_LIBRARY_PATH"
