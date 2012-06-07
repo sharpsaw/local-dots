@@ -1,0 +1,13 @@
+#!/bin/sh -xe
+## packages.debian.org in browser, add args to search (-n ... for name search)
+
+if [ 0 = $# ]; then
+    url="http://www.debian.org/distrib/packages"
+elif [ '-n' = $1 ]; then
+    shift
+    url="http://packages.debian.org/search?searchon=contents&keywords=$*&mode=path&suite=stable&arch=any"
+else
+    url="http://packages.debian.org/search?keywords=$*&searchon=names&suite=stable&section=all"
+fi
+
+,b "$url"

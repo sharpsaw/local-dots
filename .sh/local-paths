@@ -1,0 +1,11 @@
+# vim:ft=sh
+## Use ~/local for installation (and running)
+[ -e ~/local ] || mkdir ~/local
+
+export PATH="$HOME/local/bin:$HOME/local/usr/bin:$PATH"
+export LD_LIBRARY_PATH="$HOME/local/lib:$HOME/local/usr/lib:$LD_LIBRARY_PATH"
+export CFLAGS="-I$HOME/local/usr/include -I$HOME/local/include $CFLAGS"
+
+export DOT_CONFIGURE_ARGS="--prefix=$HOME/local"
+
+export LDFLAGS="$LDFLAGS -L$HOME/lib -L$HOME/local/lib"

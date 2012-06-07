@@ -1,0 +1,46 @@
+#!/bin/bash -e
+## Install a package (from URL or file) to `~/local` (or `$LOCAL_INSTALL_ROOT` if you override)
+
+# If you're messing with $PKG_HANDLERS, please do consider sending me a Pull Req
+pkg_handlers=${PKG_HANDLERS:-$HOME/.../src/local-dots/lib/pkg-handlers/}
+ext=${1##*.}
+cd $pkg_handlers
+if [ ! -d $ext ]; then
+    echo "No '$ext' in `ls -1`. Add to $pkg_handlers then send a Pull Req?"
+    exit 2
+else
+    PATH="`pwd`/$ext:$PATH"
+fi
+cd - >/dev/null
+
+dest_dir=${LOCAL_INSTALL_ROOT:-$HOME/local}
+extract_dir=${LOCAL_EXTRACT_DIR:-$HOME/pkg/$ext}
+pkgpath=$1
+fullpkgpath="`pwd`/$1"
+pkgname=${pkgpath##*/}
+simplename=`type-specific-simplify-pkgname $pkgname`
+
+[ -e $extract_dir ] || mkdir -p $extract_dir
+[ -d $dest_dir ] || mkdir -p $dest_dir
+cd $extract_dir
+
+if [ -e $fullpkgpath ]; then
+    echo "Installing from $fullpkgpath…"
+    cp $fullpkgpath $pkgname
+elif [[ "${pkgpath:0:4}" == http || "${pkgpath:0:3}" == ftp ]]; then
+    # TODO - add curl-base version (actually ,get)
+    wget $pkgpath -O $pkgname
+else
+    echo $pkgpath
+    echo "   ↖ is neither a local file nor a URL. (?)"
+    exit 72
+fi
+
+[ -d $simplename ] && rm -rf $simplename
+mkdir $simplename
+cd $simplename
+
+type-specific-extract-pkg-to-localdir ../$pkgname $dest_dir
+
+[ -e ~/.sh/,pkg-rehash ] ||
+  echo "Now it is time to hash -r"

@@ -1,0 +1,4 @@
+,pkg() {
+    ~/.../src/local-dots/bin/,pkg "$@"
+    hash -r
+}

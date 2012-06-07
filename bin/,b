@@ -1,0 +1,17 @@
+#!/bin/sh -e
+## Start a browser. Prefers webbrowser.py (which is very smart), then falls back to firefox, elinks, links, and lynx (in that order).
+
+for candidate in firefox elinks links lynx; do
+    if type $candidate >/dev/null 2>&1; then
+        browser=$candidate
+        break
+    fi
+done
+
+python -c 'import webbrowser' >/dev/null 2>&1 &&
+    browser='python -m webbrowser'
+
+# TODO - uri escaping?
+
+echo "[$browser "$@"]"
+$browser "$@"

@@ -1,0 +1,3 @@
+#!/bin/bash
+echo ${1%%_*}
+# elinks-data_0.12~pre5-2_all.deb ⇒ elinks-data

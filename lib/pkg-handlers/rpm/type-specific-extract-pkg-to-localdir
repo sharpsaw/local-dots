@@ -1,0 +1,6 @@
+#!/bin/sh
+pkgname=$1
+DEST_DIR=$2
+rpm2cpio $pkgname | cpio -dump $DEST_DIR
+rpm2cpio $pkgname
+: ...copied to $DEST_DIR

@@ -1,0 +1,3 @@
+#!/bin/bash
+echo $1 | sed 's/-[0-9].*//'
+# elinks-0.12-0.27.pre5.fc16.x86_64.rpm ⇒ elinks

@@ -1,0 +1,12 @@
+#!/bin/sh
+echo "$@"
+pkgname=$1
+DEST_DIR=$2
+ar x $pkgname
+tar xzf control.tar.gz && rm $_
+mkdir data && cd $_
+tar xzf ../data.tar.gz && rm $_
+set -x
+find . | cpio -dump $DEST_DIR
+find .
+echo "…copied to \`$DEST_DIR\`"
