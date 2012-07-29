@@ -1,5 +1,5 @@
 #!/bin/sh -xe
-## packages.debian.org in browser, add args to search (-n ... for name search)
+## Open packages.debian.org in browser, add args to search (-n ... for name search)
 
 if [ 0 = $# ]; then
     url="http://www.debian.org/distrib/packages"
